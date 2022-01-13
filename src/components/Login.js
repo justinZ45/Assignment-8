@@ -12,7 +12,7 @@ class LogIn extends Component {
         userName: '',
         password: ''
       },
-      redirect:false
+      redirect: false
     }
   }
 
@@ -25,23 +25,29 @@ class LogIn extends Component {
     this.setState({user: updatedUser})
   }
 
+  
+
   handleSubmit = (e) => {
+    console.log(this.state.redirect)
     e.preventDefault()
-    this.props.LogIn(this.state.user)
     this.setState({redirect: true})
+   //this.props.LogIn(this.state.user)
+
+   console.log(this.state.redirect)
   }
+
+
 
   render () {
     if (this.state.redirect) {
       return (<Navigate to="/userProfile"/>)
     }
-
+    
     return (
         <div id ='login-info'>
         <Link to="/" className='links'>Home</Link>
         <br/>
         <br/>
-        <form onSubmit={this.handleSubmit}>
         <div className='log-field'>
           <label htmlFor="userName">User Name: </label>
           <input type="text" className = 'login-box' name="userName" onChange={this.handleChange} value={this.state.user.userName} />
@@ -53,16 +59,19 @@ class LogIn extends Component {
           <input type="password" name="password" className='login-box'/>
         </div>
         <br/>
-        <button id = 'log-btn'>Log In</button>
-        </form>
-        
+        <button id = 'log-btn' onClick = {this.handleSubmit}>Log In</button>
         </div>
+  
+
         
     )
 
   }
+ 
+  }
 
-}
+
+
 
 export default LogIn
 

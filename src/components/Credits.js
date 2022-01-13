@@ -16,7 +16,7 @@ class Credits extends Component  //constructs, initializes data
 
                credits: [],
                description: "",
-               amount: null,
+               amount: 0,
                date: ""
            
            }
@@ -32,7 +32,6 @@ class Credits extends Component  //constructs, initializes data
       axios.get(credURL)   
        .then(response => {
            this.setState({credits: response.data,});
-           console.log(response);
        })
  
       .catch((error) =>//occur if error is caught
@@ -55,22 +54,39 @@ class Credits extends Component  //constructs, initializes data
            alert("Enter a number.")
        }
        else
+       {
        this.setState({amount: event.target.value});  //handle amount change
+       }
    }
  
  
-   addToCredits = event => //add credits to account balance, and update credit data
-   {
- 
-        const updatedBal = (this.props.accountBalance + parseFloat(this.state.amount)).toFixed(2);
-        this.props.changeBalance(updatedBal);
-        let  newCred = this.state.description;
-        let newAmt = this.state.amount;
 
-         this.state.debits.push({'id':1, 'description': newCred, 'amount': newAmt, 'date' : " "});
-    
- 
-   }
+   addCred = (event) =>
+    {
+
+        event.preventDefault();
+
+
+        let description = this.state.description;
+        let amount = this.state.amount;
+        let cur = new Date();
+        let date = `${cur.getFullYear()}-${cur.getMonth()+1}-${cur.getDate()}`;
+
+
+      this.setState({credits: [{description, amount, date},...this.state.credits]}); //add new credit entry to list
+
+
+    }
+
+    addToBal = event =>
+    {
+
+        const updatedBal = this.props.accountBalance +  parseFloat(this.state.amount)
+
+        this.props.changeBalance(updatedBal); //dynamically change overall balance
+
+    }
+
  
    render() //render, display credits and search fields
    {
@@ -81,25 +97,26 @@ class Credits extends Component  //constructs, initializes data
            <AccountBalance accountBalance={this.props.accountBalance}/>
            <br/>
       
-           <form onSubmit={this.addToCredits}>
            <div className='credit-fields'>
              <label>Please Enter an Amount: </label>
              <input type="text" name="Amount" onChange={this.amntHandle} value={this.state.amount} />
            </div>
            <br/>
-           <div className='debit-fields'>
+           <div className='credit-fields'>
            <label>Please Enter a Description: </label>
              <input type="text" name="Description" onChange={this.DescHandle} value={this.state.description} />
            </div>
            <br/>
-           <button id = "credit-submit">Add Credit</button>
-         </form>
+           <button id = "credit-submit" onClick = {this.addCred}>  Add Credit Info to List</button>
+           <br/>
+            <button id = "credit-submit" onClick = {this.addToBal}>  Add Credit Amount to Balance</button>
+       
  
-         {this.state.credits.map(data=>
+         {this.state.credits.map((data,key)=>
                  {
                     let shortDate = data.date.slice(0,10);
                     return(
-                      <div id = "credit-parts">
+                      <div id = "credit-parts" key = {key}>
                      <p>  {"Description: " + data.description} </p>
                      <p>  {"Amount: $" + data.amount} </p>
                      <p>  {"Date: " + shortDate} </p>

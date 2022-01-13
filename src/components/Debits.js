@@ -15,13 +15,14 @@ class Debits extends Component //constructs, initializes data
             {
                 debits: [],
                 description: '',
-                amount: null,
+                amount: 0,
                 date: '',
             }
 
         
     }
-    componentDidMount()  //obtains debit data from api
+
+    componentDidMount() //obtains debit data from api
     {
         
        let debURL = `https://moj-api.herokuapp.com/debits`
@@ -29,7 +30,6 @@ class Debits extends Component //constructs, initializes data
        axios.get(debURL)    
         .then(response => {
             this.setState({debits: response.data,});
-            console.log(response);
         })
 
        .catch((error) =>//occur if error is caught
@@ -43,6 +43,7 @@ class Debits extends Component //constructs, initializes data
     DescHandle = event =>
     {
         this.setState({description: event.target.value}) //handles change in description
+        console.log(this.state.description);
     }
 
     amntHandle = event =>
@@ -55,23 +56,38 @@ class Debits extends Component //constructs, initializes data
         {
         this.setState({amount: event.target.value})  //handles change in amount
          }
+         console.log(this.state.amount);
     }
 
-    addToDebits = event =>  //add debits, and update debit data
+    addDeb = (event) =>
     {
-       
-         const updatedBal = (this.props.accountBalance - parseFloat(this.state.amount)).toFixed(2);
-         this.props.changeBalance(updatedBal);
 
-        let  newDes = this.state.description;
-        let newAmt = this.state.amount;
+        event.preventDefault();
 
-         this.state.debits.push({'id':1, 'description': newDes, 'amount': newAmt, 'date' : " "});
 
-      
+        let  description = this.state.description;
+        let amount = this.state.amount;
+        let cur = new Date();
+        let date = `${cur.getFullYear()}-${cur.getMonth()+1}-${cur.getDate()}`;
+
+
+      this.setState({debits: [{description, amount, date},...this.state.debits]}); //add new debit entry to list
+
+
     }
-   
- 
+
+
+    decFromBal = event =>
+    {
+
+        const updatedBal = (this.props.accountBalance - parseFloat(this.state.amount)).toFixed(2);
+
+        this.props.changeBalance(updatedBal); //dynamically change overall balance
+
+    }
+
+
+
 
     render() //render, display credits and search fields
     {
@@ -83,7 +99,6 @@ class Debits extends Component //constructs, initializes data
             <AccountBalance accountBalance={this.props.accountBalance}/>
             <br/>
         
-   
             <div className='debit-fields'>
             <label>Please Enter an Amount: </label>
             <input type = "text" name="Amount"  onChange={this.amntHandle} value = {this.state.amount} />
@@ -94,14 +109,16 @@ class Debits extends Component //constructs, initializes data
             <input  type = "text" name="Description" onChange={this.DescHandle} value = {this.state.description} />
             </div>
             <br/>
-            <button id = "credit-submit" onClick = {this.addToDebits}> Submit</button>
-     
+            <button id = "credit-submit" onClick = {this.addDeb}>  Add Debit Info to List</button>
+            <br/>
+            <button id = "credit-submit" onClick = {this.decFromBal}>  Decrease Debit Amount from Balance</button>
+    
 
-          {this.state.debits.map(data=>
+          {this.state.debits.map((data,key)=>
                   {
                     let shortDate = data.date.slice(0,10);
                       return(
-                        <div id = "debit-parts">
+                        <div id = "debit-parts" key = {key}>
                        <p>  {"Description: " + data.description} </p>
                        <p>  {"Amount: $" + data.amount} </p>
                        <p>  {"Date: " + shortDate} </p>
