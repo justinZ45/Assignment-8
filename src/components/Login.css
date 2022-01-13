@@ -1,0 +1,26 @@
+#login-info
+{
+    background-color: rgb(185, 185, 185);
+    height: 100vh;
+    text-align: center;
+}
+
+.log-field
+{
+
+    font-size:28px;
+
+}
+
+#log-btn
+{
+    width:120px;
+    height: 60px;
+    font-size:21px;
+}
+
+.login-box
+{
+    height:40px;
+    width: 350px;
+}

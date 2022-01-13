@@ -1,0 +1,28 @@
+#bank-img
+{
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+    width: 20%;
+    height: 50%;
+    border: 7px solid rgb(10, 10, 10);
+
+}
+
+#img-info
+{
+    background-color: rgb(185, 185, 185);
+}
+
+#home-info
+{
+    text-align: center;
+    background-color:rgb(185, 185, 185);
+    height: 100vh;
+    font-size: 20px;
+}
+
+.links
+{
+    font-size: 23px;
+}

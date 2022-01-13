@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import './UserProfile.css';
 
 class UserProfile extends Component {
   render() {
     return (
-        <div>
-            <Link to="/home">Home</Link>
+        <div id = 'user-info'>
+            <Link to="/">Home</Link>
 
           <h1>User Profile</h1>
 

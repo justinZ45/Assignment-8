@@ -1,0 +1,17 @@
+#credit-info
+{
+    text-align:center;
+    font-family: monospace;
+    font-size: 17px;
+    background-color:rgb(185, 185, 185);
+}
+
+.credit-fields
+{
+   color: rgb(9, 110, 9);
+}
+
+#credit-submit
+{
+    background-color: rgb(25, 155, 25);
+}

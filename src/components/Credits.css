@@ -1,0 +1,17 @@
+#debit-info
+{
+    text-align:center;
+    font-family: monospace;
+    font-size: 17px;
+    background-color:rgb(185, 185, 185);
+}
+
+.debit-fields
+{
+   color: rgb(9, 110, 9);
+}
+
+#debit-submit
+{
+    background-color: rgb(25, 155, 25);
+}

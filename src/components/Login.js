@@ -1,5 +1,8 @@
-import React, { Component } from 'react';
-import { Navigate } from 'react-router-dom';
+// Login.js
+import React, { Component } from 'react'
+import { Navigate } from 'react-router-dom'
+import {Link} from 'react-router-dom'
+import './Login.css'
 
 class LogIn extends Component {
   constructor () {
@@ -9,7 +12,7 @@ class LogIn extends Component {
         userName: '',
         password: ''
       },
-      redirect: false
+      redirect:false
     }
   }
 
@@ -34,21 +37,33 @@ class LogIn extends Component {
     }
 
     return (
-      <div>
+        <div id ='login-info'>
+        <Link to="/" className='links'>Home</Link>
+        <br/>
+        <br/>
         <form onSubmit={this.handleSubmit}>
-          <div>
-            <label htmlFor="userName">User Name</label>
-            <input type="text" name="userName" onChange={this.handleChange} value={this.state.user.userName} />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password" />
-          </div>
-          <button>Log In</button>
+        <div className='log-field'>
+          <label htmlFor="userName">User Name: </label>
+          <input type="text" className = 'login-box' name="userName" onChange={this.handleChange} value={this.state.user.userName} />
+        </div>
+        <br/>
+        <br/>
+        <div className='log-field'>
+          <label htmlFor="password">  Password: </label>
+          <input type="password" name="password" className='login-box'/>
+        </div>
+        <br/>
+        <button id = 'log-btn'>Log In</button>
         </form>
-      </div>
+        
+        </div>
+        
     )
+
   }
+
 }
 
 export default LogIn
+
+
